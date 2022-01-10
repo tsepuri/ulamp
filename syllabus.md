@@ -1,8 +1,8 @@
 # Introduction to Connected Devices
 
-## Revised December 27, 2021
+_Revised January 10, 2022_
 
-* CWRU - EECS377
+* CWRU - ECSE / CSDS 377
 * CSU - CIS 493 / EEC 492
 
 ## Spring 2022
@@ -14,9 +14,13 @@
 ### Course Logistics
 
 * Lecture Time:  Monday & Wednesday 4:30-5:45
-* Location: **TBD**
+* Location: White 324 (Zoom to start the semester)
 * TA: **Christian Tingle** _cpt15@case.edu_
-* Office Hours:  By appointment and Slack [https://intro-to-connecteddev.slack.com/](https://intro-to-connecteddev.slack.com/)  
+  * TA Office Hours (tentative):
+  * Tuesday 7:30-9:00 pm
+  * Thursday 3:00-4:30 pm
+* Instructor Office Hours:  By appointment (please email)
+* Slack [https://intro-to-connecteddev.slack.com/](https://intro-to-connecteddev.slack.com/)  
 
 ## Course Description
 
