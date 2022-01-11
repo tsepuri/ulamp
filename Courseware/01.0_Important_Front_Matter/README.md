@@ -50,7 +50,7 @@ Follow these steps:
 ![your fork](Images/repo.png)
 1. Click on settings (far right)
 ![Settings](Images/repo_settings.png)
-1. On the Settings page, select "Collaborators and Teams" on the Left, and click on "X" next to any team _other_ than **instructors** to remove permissions for that team (e.g., **students-spring18**)
+1. On the Settings page, select "Collaborators and Teams" on the Left **NOTE: This option is now called "Manage Access"**, and click on "X" next to any team _other_ than **instructors** to remove permissions for that team (e.g., **students-spring18**)
 ![click on the "X"](Images/repo_permissions.png)
 1. DO NOT change permissions for **Instructors** as doing so will prevent your assignments from being graded.
 
