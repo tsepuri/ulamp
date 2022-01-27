@@ -52,7 +52,7 @@ Use your package manager to [install Ansible on Ubuntu Linux](https://docs.ansib
 
 ### Mac OS X
 
-Install via [Python Pip](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-macos) (no need to install the development version).
+Install via [Homebrew](https://brew.sh) with [brew install ansible](https://formulae.brew.sh/formula/ansible) or [Python Pip](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-on-macos) (no need to install the development version).
 
 ### Windows
 
@@ -63,13 +63,7 @@ If your main computer is Windows, you have a few options:
 * run Linux, either as a dual-boot computer or in a Virtual Machine (e.g., VMWare, VirtualBox [free])
 * use your Raspberry Pi as the "Control Machine" (and, as a "remote")
 
-To use your Raspberry Pi as the "Control Machine", install like so:
-
-```
-sudo apt-get update
-sudo apt-get -y install python3-pip python3-dev sshpass libffi-dev
-sudo pip3 install ansible markupsafe
-```
+To use your Raspberry Pi as the "Control Machine", install with [Pip](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-ansible-with-pip).
 
 **NOTE:** do not use `apt-get` to install Ansible on the Raspberry Pi - the version in the repositories is too old.
 
