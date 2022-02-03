@@ -1,6 +1,6 @@
 # Introduction to Connected Devices
 
-_Revised January 10, 2022_
+_Revised February 3, 2022_
 
 * CWRU - ECSE / CSDS 377
 * CSU - CIS 493 / EEC 492
@@ -116,15 +116,15 @@ First Day of Class will be January 10th.
 1. Introduction to Connected Devices (Internet of Things) and LAMPi (1/10)
 1. User Experience, User Interfaces, and Touchscreens (Kivy) (1/19)
 1. Publish/Subscribe Architectures (MQTT) (1/26)
-1. The Cloud (AWS and MQTT) (2/2)
-1. Web User Interfaces (HTTP, NGINX, JavaScript) (2/9)
-1. Web Frameworks (Django) (2/16)
-1. Production Web Serving & User/Device Association (2/23)
-1. Native Mobile Development (3/2)
-1. Bluetooth Low Energy on Embedded and Mobile Devices (3/14)
-1. Analytics: Instrumentation, Querying, and Visualization (3/21)
-1. Updating Firmware in the Field (3/28)
-1. System Loading and Load Testing (4/4)
+1. The Cloud (AWS and MQTT) (2/7)
+1. Web User Interfaces (HTTP, NGINX, JavaScript) (2/14)
+1. Web Frameworks (Django) (2/21)
+1. Production Web Serving & User/Device Association (2/28)
+1. Native Mobile Development (3/14)
+1. Bluetooth Low Energy on Embedded and Mobile Devices (3/21)
+1. Analytics: Instrumentation, Querying, and Visualization (3/28)
+1. Updating Firmware in the Field (4/4)
+1. _Dropping for Spring '22 System Loading and Load Testing ()_
 1. Essential Security - Part 1 (4/11)
 1. Essential Security - Part 2 (4/18)
 1. IoT Platforms (4/25)
