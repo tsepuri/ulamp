@@ -24,7 +24,7 @@ Please be prepared to demo your system at the very start of the next class (you 
 
 ## What to turn in
 
-Before the start of class next week, one member of each pair should send an email to the instructor with the following:
+Before the start of class next week, one member of each pair should send an submit through Canvas the following:
 
 * Subject:  Assignment 1
 * Names of the members of pair

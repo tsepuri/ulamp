@@ -117,7 +117,7 @@ You need to turn in the following:
 
 1. A short (a few sentences) write up from each member of the pair summarizing what they learned completing the assignment, and one thing that surprised them (good, bad, or just surprising).  This should in **connected-devices/writeup.md** in [Markdown](https://daringfireball.net/projects/markdown/) format.  You can find a template file in **connected-devices/template\_writeup.md**
 2. A Git Pull Request (explained below)
-3. A short video demonstrating the required behaviors emailed to the instructor.  The video should be named **[assignment 3]_[LAST_NAME_1]\_[LAST_NAME_2].[video format]**.  So, for this assignment, if your pair's last names are "Smith" and "Jones" and you record a .MOV, you would email a file named ```2_smith_jones.mov``` to the instructor.
+3. A short video demonstrating the required behaviors submitted through Canvas.  The video should be named **[assignment 3]_[LAST_NAME_1]\_[LAST_NAME_2].[video format]**.  So, for this assignment, if your pair's last names are "Smith" and "Jones" and you record a .MOV, you would submit ```2_smith_jones.mov``` to through Canvas.
 4. A live demo at the beginning of the next class - **be prepared!**
 
 ### Git Pull Request
