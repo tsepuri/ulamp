@@ -2,7 +2,7 @@
 
 Now that our system includes not just a Raspberry Pi but also an AWS EC2 instance, our Ansible plabooks must also include EC2.
 
-The `ansible/hosts.template` file has been updated to include an ```ec2``` host and a new 'cloud_broker' group:
+The `ansible/inventory.ini.template` file has been updated to include an `ec2` host and a new 'cloud_broker' group:
 
 ```
 # Ansible Hosts file
@@ -31,7 +31,7 @@ lampi
 ec2
 ```
 
-Be sure to update your `hosts` file to use the updated `ansible/hosts.template` and add your Elastic IP (EIP) hostname or IP address.
+Be sure to update your `inventory.ini` file to use the updated template and add your Elastic IP (EIP) hostname or IP address.
 
 Also, be sure to update your SSH configuration to allow SSH Key Forwarding to your EC2 instance.
 
