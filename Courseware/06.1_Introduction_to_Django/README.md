@@ -48,7 +48,7 @@ The Django Tutorial has seven parts.  Read the notes below for each part **befor
 
     ```
     sudo pip3 install django==4.0.2
-```
+    ```
     
     * When working through the tutorial, when the URL in the tutorial is something like `http://127.0.0.1:8000` you should use your EC2 hostname instead of `127.0.0.1` in your browser (e.g., `http://<your ec2 hostname>:8000`).
     * Do not forget to **open up port 8000** in your EC2 Security Group!
