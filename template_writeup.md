@@ -1,10 +1,10 @@
-# Assignment \[NUMBER\]
+# Assignment 6
 
-## \[LAST NAME 1\] and \[LAST NAME 2\]
+## Prusky and Seupri
 
-## \[FIRST NAME]\[LAST_NAME 1\]
+## Jake Prusky 
 
-something I learned ....
+I learned how templating in django works to reduce the amount of HTML code you need to write for a simple project. I also learned how to manage the backend of a simple website to set iup user authentication and modify the views and priviledges based on the user.
 
 ## \[FIRST NAME]\[LAST_NAME 2\]
 
