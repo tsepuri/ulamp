@@ -1,6 +1,6 @@
 # Assignment 6
 
-## Prusky and Seupri
+## Prusky and Sepuri
 
 ## Jake Prusky 
 
