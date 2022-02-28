@@ -1,7 +1,7 @@
-const hostAddress = window.location.hostname;
-const hostPort = "50002";
+const hostAddress = window_global['mqtt']['hostname'];
+const hostPort = window_global['mqtt']['websockets_port'];
+const deviceId = window_global['device_id'];
 const clientId = Math.random() + "_web_client";
-const deviceId = "b827eba09ec0"; // FILL IN WITH THE DEVICEID OF YOUR LAMPI DEVICE
 
 function LampiPage($){
 
