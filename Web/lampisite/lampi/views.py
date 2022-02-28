@@ -12,7 +12,8 @@ class DetailView(LoginRequiredMixin, TemplateView):
 class IndexView(LoginRequiredMixin, ListView):
     template_name = 'lampi/index.html'
     def get_queryset(self):
-        return Lampi.objects.all().filter(user=self.request.user.username)
+        return Lampi.objects.all().filter(user=self.request.user)
+
 '''
 def index(request):
     return render(request, 'lampi/index.html')
