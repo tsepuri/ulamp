@@ -25,7 +25,7 @@ SECRET_KEY = '+9izsa4uze%_ia@!6j@v(%hp6tcag)9cguo7z1h&r%mi7d$f1c'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['']
+ALLOWED_HOSTS = ['3.90.19.244', 'ec2-3-90-19-244.compute-1.amazonaws.com']
 
 
 # Application definition
@@ -124,3 +124,5 @@ LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = 'login'
 
 DEFAULT_USER = 'parked_device_user'
+
+STATIC_ROOT= os.path.join(BASE_DIR, "static")
