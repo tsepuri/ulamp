@@ -33,9 +33,8 @@ class Lampi(models.Model):
        # send association MQTT message
         assoc_msg = {
             'code': self.association_code,
-            'associated': False
+            'associated': False,
         }
-        print("Here")
         publish.single(self._generate_device_association_topic(), 
         payload=json.dumps(assoc_msg), hostname="localhost", port=50001,
         retain=True, qos=2)
