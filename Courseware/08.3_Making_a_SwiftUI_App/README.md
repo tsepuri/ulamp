@@ -44,7 +44,7 @@ You won't notice any visual change in the Canvas, but we can now add another vie
 
 ### Adding a Slider
 
-While SwiftUI is powerful enough for us to build our own interactive views, Apple has provided a long [list of built-in views and controls](https://developer.apple.com/documentation/swiftui/views-and-controls) that we can use to quickly add interactivity to our view. Since our UI is mostly built of sliders, we'll add a [`Slider`](https://developer.apple.com/documentation/swiftui/slider) above our `Text` view.
+While SwiftUI is powerful enough for us to build our own interactive views, Apple has provided a long list of built-in [views](https://developer.apple.com/documentation/swiftui/view-fundamentals) and [controls](https://developer.apple.com/documentation/swiftui/controls-and-indicators) that we can use to quickly add interactivity to our view. Since our UI is mostly built of sliders, we'll add a [`Slider`](https://developer.apple.com/documentation/swiftui/slider) above our `Text` view.
 
 Unlike our `Text` view, a [`Slider`](https://developer.apple.com/documentation/swiftui/slider) must be bound to the value that it represents. [Binding](https://developer.apple.com/documentation/swiftui/binding) creates a two way connection to the value and identifies it as the source of truth. This allows for the slider to update the value and respond accordingly if the value is updated somewhere else. (e.g., *the user is changing the lamp color using the touch screen*)
 
