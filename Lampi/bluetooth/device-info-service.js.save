@@ -1,0 +1,15 @@
+var util = require('util');
+var bleno = require('bleno');
+
+function DeviceInfoService(manufact
+urer, model, serial) {
+    bleno.PrimaryService.call(this, {
+        uuid: '180a',
+        characteristics: [
+        ]
+    });
+}
+
+util.inherits(DeviceInfoService, bleno.PrimaryService);
+
+module.exports = DeviceInfoService;
