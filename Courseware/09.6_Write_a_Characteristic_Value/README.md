@@ -170,7 +170,7 @@ Build and run the app and observe the console in Xcode. Once you see the Charact
 ## Limiting Updates
 Moving the slider generates a huge number of events very quickly, far faster than our device can respond.  With a battery-powered BTLE device, that frequency of writes would use a lot of power and hurt battery life.  We can limit the update rate, while still providing a good user experience.
 
-We'll use Apple's [Dispatch Framework](https://developer.apple.com/documentation/dispatch) is the preferred mechanism to offload computationally expensive operations using [Dispatch Queues](https://developer.apple.com/documentation/dispatch/dispatchqueue).  It has a few other uses, including running a piece of code at some point in the future. There are some subtleties with using it, including reference counting (memory management). In general, you should use weak references within a closure to long-lived objects outside the block.
+Apple's [Dispatch Framework](https://developer.apple.com/documentation/dispatch) is the preferred mechanism to offload computationally expensive operations using [Dispatch Queues](https://developer.apple.com/documentation/dispatch/dispatchqueue).  It has a few other uses, including running a piece of code at some point in the future. There are some subtleties with using it, including reference counting (memory management). In general, you should use weak references within a closure to long-lived objects outside the block.
 
 Start by adding a private boolean property that defaults to `false`:
 
@@ -187,7 +187,7 @@ Then modify the `didSet`:
 
 ```swift
 class BTLEObject: NSObject, ObservableObject {
-    @Published var number: Double = 0.0 {
+    @Published var state: State = State() {
         didSet {
             if !updatePending && state != oldValue,
                let numberCharacteristic = numberCharacteristic {

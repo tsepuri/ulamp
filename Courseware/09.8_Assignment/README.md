@@ -12,6 +12,28 @@ All of the NodeJS code for this assignment should located in your repository in 
 
 The main NodeJS file for your Bluetooth service should be named **peripheral.js**.  **peripheral.js** should be executable as a shell script (e.g., `#! /usr/bin/env node`).
 
+### Bluetooth Specifications
+
+Please refer to [Core Bluetooth Specification](https://www.bluetooth.com/specifications/bluetooth-core-specification/) for information on Characteristics and Descriptors.  Note, this is a somewhat daunting document.  Do not be intimidated - you can work your way through it.  Some things you might find useful in the specification:
+
+* GATT `Characteristic User Description` (UUID 0x2901)
+* GATT `Characteristic Presentation Format` (UUID 0x2904) (7 bytes or "octets")
+
+Hints for `Characteristic Presentation Format`:
+
+* `unitless` (0x2700) should be used for all Unit octets
+* 0x01 is the Bluetooth SIG Namespace and should be used in the Name Space octet
+* 0x0000 can be used for the Description octets
+
+
+Please refer to [GATT Specification Supplement found here](https://www.bluetooth.com/specifications/assigned-numbers/) for information about Bluetooth SIG defined Characteristics (e.g., "Manufacturer Name String", "Model Number String", etc.).
+
+Please refer to [16-bitt UIIDs found here](https://www.bluetooth.com/specifications/assigned-numbers/) for information about Bluetooth SIG defined UUIDs (including Characteristic Descriptors, Units - e.g., .
+
+Please refer to [Format Types found here](https://www.bluetooth.com/specifications/assigned-numbers/) for information on types (e.g., `uint8`, `utf8s`, etc.).
+
+
+
 ### Services
 
 Your device should Advertise and support the following Services:
@@ -32,15 +54,15 @@ The 'Device Information Service' should support the following Characteristics:
 
 | Characteristic | UUID | Descriptors | Value |
 | -------------- | ---- | ----------- | ----- |
-| [Manufacturer Name String](https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Characteristics/org.bluetooth.characteristic.manufacturer_name_string.xml) | 0x2A29 | | 'CWRU' or 'CSU'| 
-| | | [0x2901](https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Descriptors/org.bluetooth.descriptor.gatt.characteristic_user_description.xml):'Manufacturer Name'| |
-| | | [0x2904](https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Descriptors/org.bluetooth.descriptor.gatt.characteristic_presentation_format.xml): appropriate value for Characterstic |  | 
-| [Model Number String](https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Characteristics/org.bluetooth.characteristic.model_number_string.xml) | 0x2A24 | | 'LAMPI'| 
-| | | [0x2901](https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Descriptors/org.bluetooth.descriptor.gatt.characteristic_user_description.xml): 'Model Number'| |
-| | | [0x2904](https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Descriptors/org.bluetooth.descriptor.gatt.characteristic_presentation_format.xml): appropriate value for Characterstic |  | 
-| [Serial Number String](https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Characteristics/org.bluetooth.characteristic.serial_number_string.xml) | 0x2A25 | | <Device_ID> as UTF-8 String | 
-| | | [0x2901](https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Descriptors/org.bluetooth.descriptor.gatt.characteristic_user_description.xml): 'Serial Number'| |
-| | | [0x2904](https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Descriptors/org.bluetooth.descriptor.gatt.characteristic_presentation_format.xml): appropriate value for Characterstic |  | 
+| Manufacturer Name String | 0x2A29 | | 'CWRU' or 'CSU'| 
+| | | 0x2901 :'Manufacturer Name'| |
+| | | 0x2904 : appropriate value for Characterstic |  | 
+| Model Number String | 0x2A24 | | 'LAMPI'| 
+| | | 0x2901 : 'Model Number'| |
+| | | 0x2904 : appropriate value for Characterstic |  | 
+| Serial Number String | 0x2A25 | | <Device_ID> as UTF-8 String | 
+| | | 0x2901 : 'Serial Number'| |
+| | | 0x2904 : appropriate value for Characterstic |  | 
 
 All of the Device Information Service's Characterstics should be read-only.
 
@@ -58,14 +80,14 @@ The 'Lamp Service' should support the following Characteristics:
 | Characteristic | Descriptors | Value |
 | -------------- |  ----------- | ----- |
 | On / Off       |  | lamp on/off state encoded in single UINT8 (0x00 is OFF; 0x01 is ON)|
-| | [0x2901](https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Descriptors/org.bluetooth.descriptor.gatt.characteristic_user_description.xml): 'On / Off'| |
-| | [0x2904](https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Descriptors/org.bluetooth.descriptor.gatt.characteristic_presentation_format.xml): appropriate value for Characterstic |  |
+| | 0x2901 : 'On / Off'| |
+| | 0x2904 : appropriate value for Characterstic |  |
 | Brightness     |  | lamp brightness encoded in UINT8 (0x00 is 0.0; 0xFF is full brightness) |
-| | [0x2901](https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Descriptors/org.bluetooth.descriptor.gatt.characteristic_user_description.xml): 'Brightness'| |
-| | [0x2904](https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Descriptors/org.bluetooth.descriptor.gatt.characteristic_presentation_format.xml): appropriate value for Characterstic |  |
+| | 0x2901 : 'Brightness'| |
+| | 0x2904: appropriate value for Characterstic |  |
 | HSV     | | lamp HSV Color encoded in array of three UINT8 elements in this order [hue, saturation, value] (0x00 is 0.0; 0xFF is full hue/saturation) - value should always be 0xFF|
-| | [0x2901](https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Descriptors/org.bluetooth.descriptor.gatt.characteristic_user_description.xml): 'HSV'| |
-| | [0x2904](https://www.bluetooth.com/wp-content/uploads/Sitecore-Media-Library/Gatt/Xml/Descriptors/org.bluetooth.descriptor.gatt.characteristic_presentation_format.xml): appropriate value for Characterstic |  |
+| | 0x2901 : 'HSV'| |
+| | 0x2904 : appropriate value for Characterstic |  |
 
 
 All of the 'Lamp Service' Service's Characterstics should support: read, write, and notify.
