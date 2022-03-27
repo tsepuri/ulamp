@@ -14,7 +14,7 @@ PINS = [PIN_R, PIN_G, PIN_B]
 PWM_RANGE = 1000
 PWM_FREQUENCY = 1000
 
-LAMP_STATE_FILENAME = "lamp_state.db"
+LAMP_STATE_FILENAME = "lamp_state"
 
 MQTT_CLIENT_ID = "lamp_service"
 

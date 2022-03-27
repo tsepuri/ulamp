@@ -80,7 +80,22 @@
     dest: /etc/nginx/sites-available/lampisite.conf
     src: 07_lampisite_nginx.conf
 
-- name: link nginx configuration
+- name: collect all enabled NGINX sites-enabled
+  become: True
+  find:
+    paths: /etc/nginx/sites-enabled
+    patterns: "*.conf"
+  register: nginx_sites_to_delete
+
+
+- name: remove all enabled NGINX sites-enabled
+  become: True
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items: "{{ nginx_sites_to_delete.files }}"
+
+- name: link our nginx configuration
   become: True
   file:
     src: /etc/nginx/sites-available/lampisite.conf
