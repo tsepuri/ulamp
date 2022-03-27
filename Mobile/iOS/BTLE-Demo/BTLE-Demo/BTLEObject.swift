@@ -4,7 +4,10 @@
 //
 
 import Foundation
+import CoreBluetooth
 
 class BTLEObject: ObservableObject {
     @Published var number: Double = 0.0
+    
+    private var bluetoothManager: CBCentralManager!
 }

@@ -16,7 +16,7 @@ var lampService = new LampService(lampState);
 
 bleno.on('stateChange', function(state) {
   if (state === 'poweredOn') {
-    bleno.startAdvertising('MyService', [deviceInfoService.uuid], function(err)  {
+    bleno.startAdvertising('MyService', [deviceInfoService.uuid, lampService.uuid], function(err)  {
       if (err) {
         console.log(err);
       }

@@ -15,25 +15,25 @@ struct LampiView: View {
                 .edgesIgnoringSafeArea(.top)
 
             Group {
-                GradientSlider(value: $lampi.hue,
+                GradientSlider(value: $lampi.state.hue,
                                handleColor: lampi.baseHueColor,
                                trackColors: Color.rainbow())
 
-                GradientSlider(value: $lampi.saturation,
-                               handleColor: Color(hue: lampi.hue,
-                                                  saturation: lampi.saturation,
+                GradientSlider(value: $lampi.state.saturation,
+                               handleColor: Color(hue: lampi.state.hue,
+                                                  saturation: lampi.state.saturation,
                                                   brightness: 1.0),
                                trackColors: [.white, lampi.baseHueColor])
 
-                GradientSlider(value: $lampi.brightness,
-                               handleColor: Color(white: lampi.brightness),
+                GradientSlider(value: $lampi.state.brightness,
+                               handleColor: Color(white: lampi.state.brightness),
                                handleImage: Image(systemName: "sun.max"),
                                trackColors: [.black, .white])
-                    .foregroundColor(Color(white: 1.0 - lampi.brightness))
+                .foregroundColor(Color(white: 1.0 - lampi.state.brightness))
             }.padding()
 
             Button(action: {
-                lampi.isOn.toggle()
+                lampi.state.isOn.toggle()
             }) {
                 HStack {
                     Spacer()
@@ -45,7 +45,7 @@ struct LampiView: View {
             }
             .frame(height: 100)
             .background(Color.black.edgesIgnoringSafeArea(.bottom))
-            .foregroundColor(lampi.isOn ? lampi.color : .gray)
+            .foregroundColor(lampi.state.isOn ? lampi.color : .gray)
         }
     }
 }
@@ -55,3 +55,4 @@ struct ContentView_Previews: PreviewProvider {
         LampiView()
     }
 }
+

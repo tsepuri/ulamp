@@ -6,7 +6,7 @@ var CHARACTERISTIC_NAME = 'Brightness';
 
 function BrightnessCharacteristic(lampi_state){
     bleno.Characteristic.call(this, {
-        uuid: '0004A7D3-D8A4-4FEA-8174-1736E808C066',
+        uuid: '0003A7D3-D8A4-4FEA-8174-1736E808C066',
         properties: ['read','write','notify'],
         descriptors: [
             new bleno.Descriptor({
