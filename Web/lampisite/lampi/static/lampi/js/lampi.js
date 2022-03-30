@@ -68,6 +68,7 @@ function LampiPage($){
           obj.lampState.on = !obj.lampState.on;
           obj.updatePowerButton();
           obj.scheduleConfigChange();
+          mixpanel.track('Toggle Power', {'event_type': "ui", 'isOn': obj.lampState.on});
         },
 
         onSliderInput : function(inputEvent) {
@@ -80,9 +81,9 @@ function LampiPage($){
           } else if(inputEvent.target.id == "brightness-slider") {
             obj.lampState.brightness = value;
           }
-
           obj.scheduleConfigChange();
           obj.updateUIColors();
+          mixpanel.track('Slider Change', {'event_type': "ui", 'slider': inputEvent.target.id, 'value': value});
         },
 
         scheduleConfigChange : function() {
