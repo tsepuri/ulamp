@@ -18,50 +18,76 @@ encodingsP = "encodings.pickle"
 # cascade for face detection
 print("[INFO] loading encodings + face detector...")
 data = pickle.loads(open(encodingsP, "rb").read())
+print("Read pickle")
 
 # initialize the video stream and allow the camera sensor to warm up
 # Set the ser to the followng
 # src = 0 : for the build in single web cam, could be your laptop webcam
 # src = 2 : I had to set it to 2 inorder to use the USB webcam attached to my laptop
-vs = VideoStream(src=0,framerate=10).start()
+# vs = VideoStream(src=0,framerate=5).start()
+
+cap = cv2.VideoCapture(0)
+# set width and height
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 852)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+# set fps
+cap.set(cv2.CAP_PROP_FPS, 5)
+
 #vs = VideoStream(usePiCamera=True).start()
 time.sleep(2.0)
 
 # start the FPS counter
 fps = FPS().start()
 
+img_counter = 0
 # loop over frames from the video file stream
 while True:
 	# grab the frame from the threaded video stream and resize it
 	# to 500px (to speedup processing)
-	frame = vs.read()
-	frame = imutils.resize(frame, width=500)
+	# frame = vs.read()
+	ret, frame = cap.read()
+	print(ret)
+	print("Read Image")
+	# frame = imutils.resize(frame, width=500)
+	if ret:
+		name = "test"
+		print("Worked")
+		img_name = "dataset/"+ name +"/image_{}.jpg".format(img_counter)
+		cv2.imwrite(img_name, frame)
+		print("{} written!".format(img_name))
+		img_counter += 1
+	print("Resized")
 	# Detect the fce boxes
 	boxes = face_recognition.face_locations(frame)
+	print("Boxes")
 	# compute the facial embeddings for each face bounding box
 	encodings = face_recognition.face_encodings(frame, boxes)
 	names = []
+	print("Got encodings")
 
 	# loop over the facial embeddings
 	for encoding in encodings:
 		# attempt to match each face in the input image to our known
 		# encodings
+		print("Encoding")
 		matches = face_recognition.compare_faces(data["encodings"],
 			encoding)
 		name = "Unknown" #if face is not recognized, then print Unknown
+		print(f"Matches: {matches}")
 
 		# check to see if we have found a match
 		if True in matches:
 			# find the indexes of all matched faces then initialize a
 			# dictionary to count the total number of times each face
 			# was matched
+			print("Matched")
 			matchedIdxs = [i for (i, b) in enumerate(matches) if b]
 			counts = {}
-
 			# loop over the matched indexes and maintain a count for
 			# each recognized face face
 			for i in matchedIdxs:
 				name = data["names"][i]
+				print(f"Matchec: {name}")
 				counts[name] = counts.get(name, 0) + 1
 
 			# determine the recognized face with the largest number
@@ -87,7 +113,7 @@ while True:
 			.8, (0, 255, 255), 2)
 
 	# display the image to our screen
-	cv2.imshow("Facial Recognition is Running", frame)
+	# cv2.imshow("Facial Recognition is Running", frame)
 	key = cv2.waitKey(1) & 0xFF
 
 	# quit when 'q' key is pressed
