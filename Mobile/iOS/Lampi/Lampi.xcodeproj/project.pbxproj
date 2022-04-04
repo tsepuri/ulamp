@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		652AD7A727FA00CF003DA63F /* Mixpanel in Frameworks */ = {isa = PBXBuildFile; productRef = 652AD7A627FA00CF003DA63F /* Mixpanel */; };
 		8516E57B256447D300E819F6 /* LampiBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8516E57A256447D300E819F6 /* LampiBrowserView.swift */; };
 		8516E57F2564514D00E819F6 /* LampiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8516E57E2564514D00E819F6 /* LampiManager.swift */; };
 		854D43B9255B2CD600565A15 /* GradientSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854D43B8255B2CD600565A15 /* GradientSlider.swift */; };
@@ -35,6 +36,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				652AD7A727FA00CF003DA63F /* Mixpanel in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,6 +107,9 @@
 			dependencies = (
 			);
 			name = Lampi;
+			packageProductDependencies = (
+				652AD7A627FA00CF003DA63F /* Mixpanel */,
+			);
 			productName = Lampi;
 			productReference = 858B9BD12549D7A400A43AC3 /* Lampi.app */;
 			productType = "com.apple.product-type.application";
@@ -132,6 +137,9 @@
 				Base,
 			);
 			mainGroup = 858B9BC82549D7A400A43AC3;
+			packageReferences = (
+				652AD7A527FA00CF003DA63F /* XCRemoteSwiftPackageReference "mixpanel-swift" */,
+			);
 			productRefGroup = 858B9BD22549D7A400A43AC3 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -293,7 +301,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Lampi/Preview Content\"";
-				DEVELOPMENT_TEAM = 2585DTY45W;
+				DEVELOPMENT_TEAM = LN7BHQ8FW3;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Lampi/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -301,7 +309,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = edu.case.cxn201.Lampi;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.case.txs614.Lampi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -315,7 +323,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Lampi/Preview Content\"";
-				DEVELOPMENT_TEAM = 2585DTY45W;
+				DEVELOPMENT_TEAM = LN7BHQ8FW3;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Lampi/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -323,7 +331,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = edu.case.cxn201.Lampi;
+				PRODUCT_BUNDLE_IDENTIFIER = edu.case.txs614.Lampi;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -352,6 +360,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		652AD7A527FA00CF003DA63F /* XCRemoteSwiftPackageReference "mixpanel-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mixpanel/mixpanel-swift";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		652AD7A627FA00CF003DA63F /* Mixpanel */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 652AD7A527FA00CF003DA63F /* XCRemoteSwiftPackageReference "mixpanel-swift" */;
+			productName = Mixpanel;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 858B9BC92549D7A400A43AC3 /* Project object */;
 }

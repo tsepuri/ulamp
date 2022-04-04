@@ -2,7 +2,7 @@
 //  LampiView.swift
 //  Lampi
 //
-
+import Mixpanel
 import SwiftUI
 
 struct LampiView: View {
@@ -27,23 +27,38 @@ struct LampiView: View {
             VStack(alignment: .center, spacing: 20) {
                 GradientSlider(value: $lamp.state.hue,
                                handleColor: lamp.state.baseHueColor,
-                               trackColors: Color.rainbow())
+                               trackColors: Color.rainbow()) { hueValue in
+
+                    Mixpanel.mainInstance().trackUIEvent("Slider Change",
+                                                         properties: ["slider": "hueSlider", "value": hueValue])
+                }
 
                 GradientSlider(value: $lamp.state.saturation,
                                handleColor: Color(hue: lamp.state.hue,
                                                   saturation: lamp.state.saturation,
                                                   brightness: 1.0),
-                               trackColors: [.white, lamp.state.baseHueColor])
+                               trackColors: [.white, lamp.state.baseHueColor]) {
+                    saturationValue in Mixpanel.mainInstance().trackUIEvent("Slider Change",
+                                                                     properties: ["slider": "saturationSlider",
+                                                                                  "value": saturationValue])
+                }
 
                 GradientSlider(value: $lamp.state.brightness,
                                handleColor: Color(white: lamp.state.brightness),
                                handleImage: Image(systemName: "sun.max"),
-                               trackColors: [.black, .white])
+                               trackColors: [.black, .white]) {
+                    brightnessValue in Mixpanel.mainInstance().trackUIEvent("Slider Change",
+                                                                           properties: ["slider": "brightnessSlider",
+                                                                                        "value": brightnessValue])
+                }
                     .foregroundColor(Color(white: 1.0 - lamp.state.brightness))
             }.padding(.horizontal)
 
             Button(action: {
                 lamp.state.isOn = !lamp.state.isOn
+                Mixpanel.mainInstance().trackUIEvent("Toggle Power", properties: [
+                    "isOn": lamp.state.isOn
+                ])
             }) {
                 HStack {
                     Spacer()
