@@ -5,7 +5,7 @@ Everytime we change our `hi` package, there are several things we need to do. We
 
 ### Incrementing version number
 
-First let's get our auto-versioning set up. We'll use a python module called [bumpv2ersion](https://pypi.python.org/pypi/bumpv2ersion/) to accomplish this. Remote into your EC2 instance and install:
+First let's get our auto-versioning set up. We'll use a python module called [bump2version](https://github.com/c4urself/bump2version/#installation) to accomplish this. Remote into your EC2 instance and install:
 
 ```bash
 cloud$ sudo pip3 install bump2version
