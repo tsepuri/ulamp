@@ -1,0 +1,8 @@
+Origin: Tarun Sepuri
+Label: Tarun's Debian Repo
+Codename: tarun
+Architectures: armhf armel
+Suite: stable
+Components: main non-free contrib
+Description: Local Debian repository
+SignWith: 0C4ED5E7
