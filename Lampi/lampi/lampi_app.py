@@ -11,6 +11,7 @@ import pigpio
 from lamp_common import *
 import lampi.lampi_util
 from mixpanel import Mixpanel
+from mixpanel_async import AsyncBufferedConsumer
 
 
 MQTT_CLIENT_ID = "lamp_ui"
@@ -29,7 +30,7 @@ class LampiApp(App):
     _brightness = NumericProperty()
     lamp_is_on = BooleanProperty()
 
-    mp = Mixpanel(MIXPANEL_TOKEN)
+    mp = Mixpanel(MIXPANEL_TOKEN, consumer=AsyncBufferedConsumer())
 
     def _get_hue(self):
         return self._hue
@@ -229,6 +230,7 @@ class LampiApp(App):
                "{}: {}\n"
                "DeviceID: {}\n"
                "Broker Bridged: {}\n"
+               "Async Analytics"
                ).format(
                         "",  # version goes here
                         interface,
