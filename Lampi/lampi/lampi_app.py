@@ -6,6 +6,7 @@ from kivy.uix.popup import Popup
 from kivy.uix.label import Label
 from math import fabs
 import json
+import os
 from paho.mqtt.client import Client
 import pigpio
 from lamp_common import *
@@ -20,6 +21,14 @@ try:
     from .mixpanel_settings import MIXPANEL_TOKEN
 except (ModuleNotFoundError, ImportError) as e:
     MIXPANEL_TOKEN = "UPDATE TOKEN IN mixpanel_settings.py"
+
+version_path = os.path.join(os.path.dirname(__file__), '__VERSION__')
+try:
+    with open(version_path, 'r') as version_file:
+        LAMPI_APP_VERSION = version_file.read()
+except IOError:
+    # if version file cannot be opened, we'll stick with unknown
+    LAMPI_APP_VERSION = 'Unknown'
 
 
 class LampiApp(App):
@@ -232,7 +241,7 @@ class LampiApp(App):
                "Broker Bridged: {}\n"
                "Async Analytics"
                ).format(
-                        "",  # version goes here
+                        LAMPI_APP_VERSION,
                         interface,
                         ipaddr,
                         deviceid,
