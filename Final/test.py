@@ -1,4 +1,5 @@
 import cv2
+import time
 '''
 apiPreference    preferred Capture API backends to use. 
 Can be used to enforce a specific reader implementation 
@@ -7,9 +8,19 @@ e.g. cv2.CAP_MSMF or cv2.CAP_DSHOW.
 '''
 # open video0
 cap = cv2.VideoCapture(0)
+cap.set(3,1280)
+cap.set(4,1024)
+#cap.set(cv2.CAP_PROP_FPS, 10)
+#cap.set(10,52)
+#cap.set(11,16)  
+#cap.set(12,29)
+#for i in range(3):
+time.sleep(2.0)
+cap.set(15, -8.0)
+
 # set width and height
-# cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
-# cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
+#cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+#cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
 # set fps
 # cap.set(cv2.CAP_PROP_FPS, 30)
 # while(True):
@@ -19,8 +30,9 @@ cap = cv2.VideoCapture(0)
 #     # cv2.imshow('frame', frame)
 #     if cv2.waitKey(1) & 0xFF == ord('q'):
 #         break
-for img_counter in range(2):
+for img_counter in range(10):
     # Capture frame-by-frame
+    
     ret, frame = cap.read()
     print(ret)
     # Display the resulting frame

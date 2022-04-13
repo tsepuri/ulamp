@@ -8,6 +8,12 @@ import imutils
 import pickle
 import time
 import cv2
+import platform
+from math import fabs
+import json
+import os
+from paho.mqtt.client import Client
+from lamp_common import *
 
 
 MQTT_CLIENT_ID = "facial_req"
@@ -44,10 +50,12 @@ class FacialRecognition:
 
     def runner(self):
         cap = cv2.VideoCapture(0)
-        cv2.set(cv2.CAP_PROP_FRAME_WIDTH, 500)
-        cv2.set(cv2.CAP_PROP_FRAME_HEIGHT, 300)
+        cap.set(3,1280)
+        cap.set(4,1024)
+        time.sleep(2)
+        cap.set(15, -8.0)
         # set fps
-        cv2.set(cv2.CAP_PROP_FPS, 5)
+        cap.set(cv2.CAP_PROP_FPS, 5)
 
         #vs = VideoStream(usePiCamera=True).start()
         time.sleep(2.0)
@@ -62,7 +70,6 @@ class FacialRecognition:
             # to 500px (to speedup processing)
             # frame = vs.read()
             ret, frame = cap.read()
-            cv2.normalize(frame, frame, 0, 255, cv2.NORM_MINMAX)
             print(ret)
             print("Read Image")
             # frame = imutils.resize(frame, width=500)
@@ -105,17 +112,16 @@ class FacialRecognition:
                     for i in matchedIdxs:
                         name = data["names"][i]
                         print(f"Matched: {name}")
-                        msg = {"name":name, "client":MQTT_CLIENT_ID}
-                        self.mqtt.publish(TOPIC_USER_DELETED,
-                            json.dumps(msg).encode('utf-8'),
-                            qos=1)
                         counts[name] = counts.get(name, 0) + 1
 
                     # determine the recognized face with the largest number
                     # of votes (note: in the event of an unlikely tie Python
                     # will select first entry in the dictionary)
                     name = max(counts, key=counts.get)
-
+                    msg = {"name":name, "client":MQTT_CLIENT_ID}
+                    self.mqtt.publish(TOPIC_USER_DETECTED,
+                            json.dumps(msg).encode('utf-8'),
+                            qos=1)
                     #If someone in your dataset is identified, print their name on the screen
                     if currentname != name:
                         currentname = name

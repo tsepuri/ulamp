@@ -5,7 +5,7 @@ import os
 from paho.mqtt.client import Client
 from lamp_common import *
 
-MQTT_CLIENT_ID = "user_persets"
+MQTT_CLIENT_ID = "user_presets"
 
 class UserPresets:
     def __init__(self):
@@ -33,6 +33,10 @@ class UserPresets:
     def receive_new_lamp_state(self, client, userdata, message):
         print(message.payload.decode('utf-8'))
         new_person = json.loads(message.payload.decode('utf-8'))
+        new_state = {'color': {'h': 1, 's':1},
+               'brightness': 1,
+               'on': self.lamp_is_on,
+               'client': 'ec2'}
         if new_person['name'] == 'Oleksii':
             new_state = {'color': {'h': 0.5, 's':1},
                'brightness': 1,
