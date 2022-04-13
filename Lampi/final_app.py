@@ -32,6 +32,7 @@ class UserPresets:
         self.mqtt.loop_forever()
 
     def receive_new_lamp_state(self, client, userdata, message):
+        print(message.payload.decode('utf-8'))
         new_person = json.loads(message.payload.decode('utf-8'))
         if new_person['name'] == 'Oleksii':
             new_state = {'color': {'h': 0.5, 's':1},
@@ -44,7 +45,7 @@ class UserPresets:
                'on': self.lamp_is_on,
                'client': 'ec2'}
 
-        Clock.schedule_once(lambda dt: self._update_ui(new_state), 0.01)
+        self._update_ui(new_state)
 
     def _update_ui(self, new_state):
         if self._updated and new_state['client'] == MQTT_CLIENT_ID:
