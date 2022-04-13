@@ -5,7 +5,8 @@ import os
 from paho.mqtt.client import Client
 from lamp_common import *
 
-MQTT_CLIENT_ID = "user_presets"
+MQTT_BROKER_PORT = 50001
+MQTT_CLIENT_ID = "user_persets"
 
 class UserPresets:
     def __init__(self):
@@ -21,22 +22,17 @@ class UserPresets:
         
 
     def on_connect(self, client, userdata, flags, rc):
-        self.mqtt.message_callback_add(TOPIC_USER_DETECTED,
+        self.mqtt.message_callback_add("devices/b827eba09ec0/" + TOPIC_USER_DETECTED,
                                        self.receive_new_lamp_state)
-        self.mqtt.subscribe(TOPIC_USER_DETECTED, qos=1)
+        self.mqtt.subscribe("devices/b827eba09ec0/" + TOPIC_USER_DETECTED, qos=1)
 
     def serve(self):
-        self.mqtt.connect(MQTT_BROKER_HOST, port=MQTT_BROKER_PORT,
-                          keepalive=MQTT_BROKER_KEEP_ALIVE_SECS)
+        self.mqtt.connect('localhost', port=50001)
         self.mqtt.loop_forever()
 
     def receive_new_lamp_state(self, client, userdata, message):
-        print(message.payload.decode('utf-8'))
         new_person = json.loads(message.payload.decode('utf-8'))
-        new_state = {'color': {'h': 1, 's':1},
-               'brightness': 1,
-               'on': self.lamp_is_on,
-               'client': 'ec2'}
+        print(new_person)
         if new_person['name'] == 'Oleksii':
             new_state = {'color': {'h': 0.5, 's':1},
                'brightness': 1,
@@ -74,7 +70,7 @@ class UserPresets:
                'brightness': self.brightness,
                'on': self.lamp_is_on,
                'client': MQTT_CLIENT_ID}
-        self.mqtt.publish(TOPIC_SET_LAMP_CONFIG,
+        self.mqtt.publish("devices/b827eba09ec0/" + TOPIC_SET_LAMP_CONFIG,
                           json.dumps(msg).encode('utf-8'),
                           qos=1)
 
