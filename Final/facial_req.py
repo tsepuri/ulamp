@@ -17,7 +17,6 @@ from lamp_common import *
 
 
 MQTT_CLIENT_ID = "facial_req"
-
 # initialize the video stream and allow the camera sensor to warm up
 # Set the ser to the followng
 # src = 0 : for the build in single web cam, could be your laptop webcam
@@ -33,7 +32,7 @@ class FacialRecognition:
         # load the known faces and embeddings along with OpenCV's Haar
         # cascade for face detection
         print("[INFO] loading encodings + face detector...")
-        data = pickle.loads(open(encodingsP, "rb").read())
+        self.data = pickle.loads(open(encodingsP, "rb").read())
         print("Read pickle")
         self.mqtt = Client(client_id=MQTT_CLIENT_ID)
         self.mqtt.enable_logger()
@@ -94,9 +93,10 @@ class FacialRecognition:
                 # attempt to match each face in the input image to our known
                 # encodings
                 print("Encoding")
-                matches = face_recognition.compare_faces(data["encodings"],
+                matches = face_recognition.compare_faces(self.data["encodings"],
                     encoding)
                 name = "Unknown" #if face is not recognized, then print Unknown
+                currentname = "Unknown2"
                 print(f"Matches: {matches}")
 
                 # check to see if we have found a match
@@ -110,7 +110,7 @@ class FacialRecognition:
                     # loop over the matched indexes and maintain a count for
                     # each recognized face face
                     for i in matchedIdxs:
-                        name = data["names"][i]
+                        name = self.data["names"][i]
                         print(f"Matched: {name}")
                         counts[name] = counts.get(name, 0) + 1
 
@@ -118,13 +118,13 @@ class FacialRecognition:
                     # of votes (note: in the event of an unlikely tie Python
                     # will select first entry in the dictionary)
                     name = max(counts, key=counts.get)
-                    msg = {"name":name, "client":MQTT_CLIENT_ID}
-                    self.mqtt.publish(TOPIC_USER_DETECTED,
-                            json.dumps(msg).encode('utf-8'),
-                            qos=1)
                     #If someone in your dataset is identified, print their name on the screen
                     if currentname != name:
                         currentname = name
+                        msg = {"name":name, "client":MQTT_CLIENT_ID}
+                        self.mqtt.publish(TOPIC_USER_DETECTED,
+                            json.dumps(msg).encode('utf-8'),
+                            qos=1)
                         print(currentname)
 
                 # update the list of names
