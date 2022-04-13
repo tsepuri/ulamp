@@ -4,7 +4,6 @@ import json
 import os
 from paho.mqtt.client import Client
 from lamp_common import *
-import lampi.lampi_util
 
 MQTT_CLIENT_ID = "user_persets"
 

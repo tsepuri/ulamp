@@ -44,7 +44,7 @@ class FacialRecognition:
 		pass
 
 	def runner(self):
-		cap = cv2.VideoCapture("nvarguscamerasrc ! nvvidconv ! video/x-raw, width=1024, height=576, format=BGRx ! videoconvert ! video/x-raw, format=BGR ! appsink", cv2.CAP_GSTREAMER)
+		cap = cv2.VideoCapture(0)
 		cv2.set(cv2.CAP_PROP_FRAME_WIDTH, 500)
 		cv2.set(cv2.CAP_PROP_FRAME_HEIGHT, 300)
 		# set fps
@@ -63,6 +63,7 @@ class FacialRecognition:
 			# to 500px (to speedup processing)
 			# frame = vs.read()
 			ret, frame = cap.read()
+			cv2.normalize(frame, frame, 0, 255, cv2.NORM_MINMAX)
 			print(ret)
 			print("Read Image")
 			# frame = imutils.resize(frame, width=500)
