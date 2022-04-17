@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 import platform
 from math import fabs
 import json
@@ -15,7 +14,7 @@ class UserPresets:
         self.hue = 1
         self.saturation = 1
         self.brightness = 1
-        self.lamp_is_on = True
+        self.lamp_is_on = False
 
         self.mqtt = Client(client_id=MQTT_CLIENT_ID)
         self.mqtt.enable_logger()
@@ -23,7 +22,7 @@ class UserPresets:
         
 
     def on_connect(self, client, userdata, flags, rc):
-        self.mqtt.message_callback_add("devices/b827eba09ec0/" + TOPIC_USER_DETECTED,
+        self.mqtt.message_callback_add(TOPIC_USER_DETECTED,
                                        self.receive_new_lamp_state)
         self.mqtt.subscribe("devices/b827eba09ec0/" + TOPIC_USER_DETECTED, qos=1)
 
@@ -33,11 +32,6 @@ class UserPresets:
 
     def receive_new_lamp_state(self, client, userdata, message):
         new_person = json.loads(message.payload.decode('utf-8'))
-        print(new_person)
-        new_state = {'color': {'h': 1, 's':1},
-            'brightness': 1,
-            'on': self.lamp_is_on,
-            'client': 'ec2'}
         if new_person['name'] == 'Oleksii':
             new_state = {'color': {'h': 0.5, 's':1},
                'brightness': 1,
@@ -49,7 +43,7 @@ class UserPresets:
                'on': self.lamp_is_on,
                'client': 'ec2'}
 
-        self._update_ui(new_state)
+        Clock.schedule_once(lambda dt: self._update_ui(new_state), 0.01)
 
     def _update_ui(self, new_state):
         if self._updated and new_state['client'] == MQTT_CLIENT_ID:
