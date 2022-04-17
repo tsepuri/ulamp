@@ -243,7 +243,7 @@ You will need to transfer the CSR to your EC2 instance (e.g., using `scp`), gene
 We will fulfil the signing request based on the CA's public and private key pair we initially created.
 
 ```bash
-cloud$ openssl x509 -req -in b827eb74663e_broker.csr -CA lampi_ca.crt -CAkey lampi_ca.key -CAcreateserial -out b827eb74663e_broker.crt -days 365
+cloud$ openssl x509 -req -in b827eb74663e_broker.csr -CA lampi_ca.crt -CAkey lampi_ca.key -CAcreateserial -out b827eb74663e_broker.crt -days 365 -sha256  -extfile openssl.conf -extensions v3_req
 ```
 
 The parameters are the same as for the Server SSL/TLS certificate with the exception of different filenames. You'll be prompted for the CA key's password that you created initially. Once you provide the password, the TLS certificate will be created based off of the contents of the CSR.
