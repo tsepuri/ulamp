@@ -178,7 +178,7 @@ Lastly, we need to use the CSR to create the TLS Certificate based on the CA Roo
 If we were purchasing a Certificate from a commercial CA, we would send the CSR to the CA, go through a process to verify our identity (or our organization's identity) with the CA, and then the CA would send us back a Certificate (created with the CA's Root Certificate and Public/Private Key Pair, and our CSR).  Since we are acting as our own CA, we will generate the Certificate directly.
 
 ```bash
-cloud$ openssl x509 -req -in lampi_server.csr -CA lampi_ca.crt -CAkey lampi_ca.key -CAcreateserial -out lampi_server.crt -days 365
+cloud$ openssl x509 -req -in lampi_server.csr -CA lampi_ca.crt -CAkey lampi_ca.key -CAcreateserial -out lampi_server.crt -days 365 -sha256  -extfile openssl.conf -extensions v3_req
 ```
 
 Some notes about this command:
@@ -191,7 +191,7 @@ Some notes about this command:
 * **-out** the filename of the generated Server SSL/TLS Certificate
 * **-days 365** means this certificate will expire in a year. Note that this means a year from now, LAMPI will stop being able to communicate to the cloud unless you issue new certificates.
 
-You'll be prompted for the CA key's password that you created initially. Once you provide the password, the TLS certificate will be created based off of the contents of the CSR.
+You'll be prompted for the CA key's passphrase that you created initially. Once you provide the password, the TLS certificate will be created based off of the contents of the CSR.
 
 ### Create the client certificate
 
@@ -201,10 +201,10 @@ Client certificates are relatively rare.  Typically, Web Server's have a certifi
 
 To secure our MQTT communications between the LAMPI devices and the Mosquitto broker in EC2, we will embed a unique client certificate in each device.  Since both the LAMPI and Mosquitto broker are under our control, we can provide our CA Certificate to both, allowing them to mutually authenticate.  This provides highly secure authentication _and_ a secure, encrypted channel for communication.
 
-First, we need to get the clientid name that we used in the MQTT bridging configuration - this will be used as the **Common Name** in the certificate.  Open **/etc/mosquitto/conf.d/bridging.conf** and find the value for **remote_clientid**. You can output the file contents easily using `cat`:
+First, we need to get the clientid name that we used in the MQTT bridging configuration - this will be used as the **Common Name** in the certificate.  Open **/etc/mosquitto/conf.d/lampi_bridge.conf** and find the value for **remote_clientid**. You can output the file contents easily using `cat`:
 
 ```bash
-lamp$ cat /etc/mosquitto/conf.d/bridging.conf
+lamp$ cat /etc/mosquitto/conf.d/lampi_bridge.conf
 ```
 
 The value of the **remote_clientid** (something like ```b827eb74663e_broker```) will be used as the Common Name for the client certificate we are going to create.

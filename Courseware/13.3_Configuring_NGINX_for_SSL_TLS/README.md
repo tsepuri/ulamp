@@ -60,7 +60,7 @@ Let's configure our browsers to trust our CA on our computer so we can connect t
  
 You'll need to install our CA Root Certificate as a trusted root:
 
-- [Windows](http://www.thewindowsclub.com/manage-trusted-root-certificates-windows) (note, you might need to convert your certificate in PEM format to another format, PKCS#12; you can use the [OpenSSL PKCS#12](https://www.openssl.org/docs/manmaster/man1/openssl-pkcs12.html) tool, something like `pkcs12 -export -in lampi_ca.crt -inkey lampi_ca.key -out lampi_ca.pfx`)
+- [Windows](http://www.thewindowsclub.com/manage-trusted-root-certificates-windows) (note, you might need to convert your certificate in PEM format to another format, PKCS#12; you can use the [OpenSSL PKCS#12](https://www.openssl.org/docs/manmaster/man1/openssl-pkcs12.html) tool, something like `pkcs12 -export -in lampi_ca.crt -inkey lampi_ca.key -out lampi_ca.pfx`) if you have Windows Home Edition please see [this](https://www.thewindowsclub.com/edit-local-group-policy-objects-using-policy-plus)
 - [OSX Add certficates to Keychain](https://support.apple.com/guide/keychain-access/add-certificates-to-a-keychain-kyca2431/mac) and [OSX Change Trust Settings](https://support.apple.com/guide/keychain-access/change-the-trust-settings-of-a-certificate-kyca11871/mac)
 - [FireFox Specific](https://support.mozilla.org/en-US/kb/setting-certificate-authorities-firefox)
 - For \*nix systems, search for instructions related to the browser and distribution you are using.
