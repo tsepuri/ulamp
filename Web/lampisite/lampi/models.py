@@ -62,3 +62,12 @@ class Lampi(models.Model):
             hostname="localhost",
             port=50001,
             )
+
+class LampiPref(models.Model):
+    device_id = models.ForeignKey(Lampi, db_index=True, on_delete=models.CASCADE)
+    user_name = models.CharField(max_length=50)
+    settings = models.CharField(max_length=50, default="{'color': {'h': 1, 's':1}, 'brightness': 1}")
+    # pics??
+    # user detail?
+    def __str__(self):
+        return f"{self.device_id}, {self.user_name}: {self.settings}"

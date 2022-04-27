@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.conf import settings
-from .models import Lampi
+from .models import Lampi, LampiPref
 
 
 def device_association_topic(device_id):
@@ -29,4 +29,25 @@ class AddLampiForm(forms.Form):
                                            code='invalid'))
         else:
             cleaned_data['device'] = devices[0]
+        return cleaned_data
+
+class AddUserSettingForm(forms.Form):
+
+    def __init__(self, device_id, user, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        users = LampiPref.objects.filter(device_id=device_id)
+        print(type(users))
+        print(users)
+        user_names = []
+        for i in range(len(users)):
+            user = users[i]
+            user_names.append((user.user_name, user.user_name))
+        print(type(user_names))
+        print(user_names)
+        self.fields['user_name'] = forms.CharField(label='User Name', widget=forms.Select(choices=user_names))
+
+    def clean(self):
+        cleaned_data = super(AddUserSettingForm, self).clean()
+        print("received form for user name {}".format(
+              cleaned_data['user_name']))
         return cleaned_data

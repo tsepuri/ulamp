@@ -22,13 +22,12 @@ from django.conf import settings
 extra_context = {}
 
 urlpatterns = [
-    path('lampi/', include('lampi.urls'), name='lampi'),
+    path('', include('lampi.urls'), name='lampi'),
     path('admin/', admin.site.urls),
     path('login/', auth_views.LoginView.as_view(
          template_name='lampi/login.html',
          extra_context=extra_context), name='login'),
     path('logout/', auth_views.LogoutView.as_view(
           template_name='lampi/logout.html',
-         extra_context=extra_context), name='logout'),
-    path('', RedirectView.as_view(pattern_name='lampi:index'), name='root'),
+         extra_context=extra_context), name='logout')
 ]

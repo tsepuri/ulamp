@@ -1,0 +1,20 @@
+{% extends "lampi/base.html" %}
+
+{% block content %}
+
+{% if user_list %}
+    <ul>
+    {% for user in user_list %}
+       <li><a href="{% url 'lampi:userdetail' user.user_name %}">
+        {{ user.user_name }}</a></li>
+    {% endfor %}
+    </ul>
+    <a href="{% url 'lampi:adduser' %}">Add a User</a>
+{% else %}
+    <p>No users are available.</p>
+    <a href="{% url 'lampi:adduser' %}">Add a User</a>
+{% endif %}
+
+{% endblock %}
+
+{% block page_event %}LAMPI List{% endblock %}
