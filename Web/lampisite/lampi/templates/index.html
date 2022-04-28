@@ -1,0 +1,12 @@
+{% extends "lampi/base.html" %}
+
+{% block content %}
+<br>
+<a href="{% url 'lampi:lampiindex' %}">LAMPIs</a>
+<br>
+<a href="{% url 'lampi:usersindex' %}">Users</a>
+
+
+{% endblock %}
+
+{% block page_event %}LAMPI List{% endblock %}

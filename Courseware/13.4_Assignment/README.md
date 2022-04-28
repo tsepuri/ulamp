@@ -81,7 +81,7 @@ For this assignment, you need to demonstrate:
 * Navigating to unencrypted `http://{your_ec2_fqdn}/` should not provide access to the page
 * Open the developer console in your browser, open the loaded `lampi.js` and demonstrate that the `useSSL` option is set to `true`.
 * Demonstrate that you have no insecure ports open in your EC2 Security Group
-* Demonstrate output of [SSL Decoder](https://ssldecoder.eu)
+* Demonstrate output of [SSL Server Test](https://www.ssllabs.com/ssltest/index.html)
 
 
 ## What to Turn in

@@ -1,0 +1,8 @@
+Origin: EECS397 Connected Devices
+Label: EECS397 Connected Devices Repository
+Codename: eecs397
+Architectures: armhf armel
+Suite: stable
+Components: main non-free contrib
+Description: Local Debian repository
+SignWith: 11DE96A5876171DDB1503189E7F7F2C84C163CD6

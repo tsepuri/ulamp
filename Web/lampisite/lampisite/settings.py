@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'django_extensions',
     'lampi.apps.LampiConfig',
     'django.contrib.admin',
     'django.contrib.auth',

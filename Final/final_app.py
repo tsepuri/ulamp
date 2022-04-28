@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import platform
 from math import fabs
 import json
@@ -14,7 +15,7 @@ class UserPresets:
         self.hue = 1
         self.saturation = 1
         self.brightness = 1
-        self.lamp_is_on = False
+        self.lamp_is_on = True
 
         self.mqtt = Client(client_id=MQTT_CLIENT_ID)
         self.mqtt.enable_logger()
@@ -33,6 +34,10 @@ class UserPresets:
     def receive_new_lamp_state(self, client, userdata, message):
         new_person = json.loads(message.payload.decode('utf-8'))
         print(new_person)
+        new_state = {'color': {'h': 1, 's':1},
+            'brightness': 1,
+            'on': self.lamp_is_on,
+            'client': 'ec2'}
         if new_person['name'] == 'Oleksii':
             new_state = {'color': {'h': 0.5, 's':1},
                'brightness': 1,

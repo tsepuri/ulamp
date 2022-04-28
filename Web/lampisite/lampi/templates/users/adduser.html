@@ -1,0 +1,37 @@
+{% extends "lampi/base.html" %}
+{% load static %}
+
+{% block title %}Add User{% endblock %}
+{% block additional_head_content %}
+  <link rel="stylesheet" type="text/css" href="{% static 'users/css/user-camera.css' %}">
+{% endblock %}
+
+{% block content %}
+<form action="" method="post" id="adduserform">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button id="submits">Test</button>
+    <input type="submit" id="submit" value="Add User" />
+    <p>Please take photos of your face.</p>
+    <div class="camera">
+        <video id="video">Video stream not available.</video>
+        <button id="startbutton" type="button">Take photo <span id="num-photos">1</span>/<span id="max-photos">10</span></button>
+        <input id="webimg" value="" name="src" type="text" style="display: none;">
+        <canvas id="canvas">
+        </canvas>
+        </div>
+    <br>
+    <div>
+        <img id="photo" alt="your image">
+    </div>
+    <div class="below-cam">
+   
+    </div>
+</form>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.2/mqttws31.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.blockUI/2.70/jquery.blockUI.min.js" type="text/javascript"></script>
+<script type="text/javascript"> window.CSRF_TOKEN = "{{ csrf_token }}"; </script>
+<script src="{% static 'users/js/user-camera.js' %}" type="text/javascript"></script>
+
+{% endblock %}
