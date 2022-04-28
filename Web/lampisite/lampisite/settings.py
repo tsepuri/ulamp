@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    "sslserver",
     'lampi.apps.LampiConfig',
     'django.contrib.admin',
     'django.contrib.auth',

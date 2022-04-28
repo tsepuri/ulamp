@@ -1,11 +1,29 @@
 {% extends "lampi/base.html" %}
+{% load static %}
 
 {% block title %}Add User{% endblock %}
+{% block additional_head_content %}
+  <link rel="stylesheet" type="text/css" href="{% static 'users/css/user-camera.css' %}">
+{% endblock %}
 
 {% block content %}
 <form action="" method="post">
     {% csrf_token %}
     {{ form.as_p }}
+    <div id="camera" class="camera">
+        <video id="video">Video stream not available.</video>
+        <button id="startbutton" type="button">Take photo</button>
+        <input id="webimg" value="" name="src" type="text" style="display: none;">
+        <canvas id="canvas">
+        </canvas>
+    </div>
+    <br>
+    <div>
+        <img id="photo" alt="your image">
+    </div>
+
     <input type="submit" value="Add User" />
 </form>
+<script src="{% static 'users/js/user-camera.js' %}" type="text/javascript"></script>
+
 {% endblock %}

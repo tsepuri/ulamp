@@ -2,11 +2,11 @@
 
 {% block content %}
 
-{% if user_list %}
+{% if lampipref_list %}
     <ul>
-    {% for user in user_list %}
-       <li><a href="{% url 'lampi:userdetail' user.user_name %}">
-        {{ user.user_name }}</a></li>
+    {% for user in lampipref_list %}
+       <li><a>
+        {{ user.username }}</a></li>
     {% endfor %}
     </ul>
     <a href="{% url 'lampi:adduser' %}">Add a User</a>

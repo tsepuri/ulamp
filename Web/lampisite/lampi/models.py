@@ -63,16 +63,63 @@ class Lampi(models.Model):
             port=50001,
             )
 
+class Camera(models.Model):
+    name = models.CharField(max_length=50, default="My Camera")
+    device_id = models.CharField(db_index=True,
+                                 max_length=12,
+                                 primary_key=True)
+    user = models.ForeignKey(User, db_index=True,
+                             on_delete=models.SET(get_parked_user))
+    association_code = models.CharField(max_length=32, unique=True,
+                                        default=generate_association_code)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return "{}: {}".format(self.device_id, self.name)
+
+    def _generate_device_association_topic(self):
+        return 'devices/{}/lamp/associated'.format(self.device_id)
+
+    def publish_unassociated_msg(self):
+        # send association MQTT message
+        assoc_msg = {}
+        assoc_msg['associated'] = False
+        assoc_msg['code'] = self.association_code
+        paho.mqtt.publish.single(
+            self._generate_device_association_topic(),
+            json.dumps(assoc_msg),
+            qos=2,
+            retain=True,
+            hostname="localhost",
+            port=50001,
+            )
+
+    def associate_and_publish_associated_msg(self,  user):
+        # update Lampi instance with new user
+        self.user = user
+        self.save()
+        # publish associated message
+        assoc_msg = {}
+        assoc_msg['associated'] = True
+        paho.mqtt.publish.single(
+            self._generate_device_association_topic(),
+            json.dumps(assoc_msg),
+            qos=2,
+            retain=True,
+            hostname="localhost",
+            port=50001,
+            )
+
 class LampiPref(models.Model):
     device_id = models.ForeignKey(Lampi, db_index=True, on_delete=models.CASCADE)
-    user_name = models.CharField(max_length=50)
+    username = models.CharField(max_length=100, db_column='user_name')
     settings = models.CharField(max_length=100, default="{'color': {'h': 1, 's':1}, 'brightness': 1}")
     # pics??
     # user detail?
     def __str__(self):
-        return f"{self.device_id}, {self.user_name}: {self.settings}"
+        return f"{self.device_id}, {self.username}: {self.settings}"
     
     def add_user(self, name, device_id):
-        self.user_name = name
+        self.username = name
         self.device_id = device_id
         self.save()

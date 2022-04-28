@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404
 from .models import Lampi, LampiPref
 from django.conf import settings
-from lampi.forms import AddLampiForm, AddUserSettingForm
+from lampi.forms import AddLampiForm, AddUserSettingForm, AddUserForm
 from mixpanel import Mixpanel
 
 class IndexView(LoginRequiredMixin, generic.TemplateView):
@@ -18,7 +18,7 @@ class UsersIndexView(LoginRequiredMixin, generic.ListView):
     template_name = 'users/index.html'
 
     def get_queryset(self):
-        results = LampiPref.objects.order_by('user_name').distinct()
+        results = LampiPref.objects.order_by('username').distinct()
         return results
 
     def get_context_data(self, **kwargs):
@@ -84,9 +84,9 @@ class AddLampiView(LoginRequiredMixin, generic.FormView):
         return super(AddLampiView, self).form_valid(form)
 
 class AddUserView(LoginRequiredMixin, generic.FormView):
-    template_name = 'lampi/addlampi.html'
-    form_class = AddLampiForm
-    success_url = '/lampi'
+    template_name = 'users/adduser.html'
+    form_class = AddUserForm
+    success_url = '/users'
 
     def get_context_data(self, **kwargs):
         context = super(AddUserView, self).get_context_data(**kwargs)
@@ -94,7 +94,8 @@ class AddUserView(LoginRequiredMixin, generic.FormView):
         return context
 
     def form_valid(self, form):
-        device = form.cleaned_data['device']
+        username = form.cleaned_data['username']
+        print(username)
         device.associate_and_publish_associated_msg(self.request.user)
 
         mp = Mixpanel(settings.MIXPANEL_TOKEN)
@@ -131,9 +132,9 @@ class UpdateSettingsView(LoginRequiredMixin, generic.FormView):
 
     def form_valid(self, form):
         context = self.get_context_data()
-        user_name = form.cleaned_data['user_name']
+        username = form.cleaned_data['username']
         lampis = Lampi.objects.filter(user=self.request.user)
-        user = LampiPref.objects.get(device_id=context['device_id'], user_name=user_name)
+        user = LampiPref.objects.get(device_id=context['device_id'], username=username)
         print(user)
         if user is not None:
             new_state = {'color': {'h': context['h'], 's':context['s']},

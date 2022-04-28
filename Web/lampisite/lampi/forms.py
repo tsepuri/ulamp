@@ -32,16 +32,16 @@ class AddLampiForm(forms.Form):
         return cleaned_data
 
 class AddUserForm(forms.Form):
-    user_name = forms.CharField(label="User Name")
+    username = forms.CharField(label="Username")
     def clean(self):
         cleaned_data = super(AddUserForm, self).clean()
-        print("received form with user name {}".format(
-              cleaned_data['user_name']))
-        existing_users = LampiPref.objects.order_by('user_name').distinct()
-        if cleaned_data['user_name'] in existing_users:
-            self.add_eror('user_name', ValidationError("User already exists", code='invalid'))
+        print("received form with username {}".format(
+              cleaned_data['username']))
+        existing_users = LampiPref.objects.order_by('username').distinct()
+        if cleaned_data['username'] in existing_users:
+            self.add_eror('username', ValidationError("Username already exists", code='invalid'))
         else:
-            # Face stuff
+            print()
         return cleaned_data
 
 class AddUserSettingForm(forms.Form):
@@ -51,16 +51,16 @@ class AddUserSettingForm(forms.Form):
         users = LampiPref.objects.filter(device_id=device_id)
         print(type(users))
         print(users)
-        user_names = []
+        usernames = []
         for i in range(len(users)):
             user = users[i]
-            user_names.append((user.user_name, user.user_name))
-        print(type(user_names))
-        print(user_names)
-        self.fields['user_name'] = forms.CharField(label='User Name', widget=forms.Select(choices=user_names))
+            usernames.append((user.username, user.username))
+        print(type(usernames))
+        print(usernames)
+        self.fields['username'] = forms.CharField(label='User Name', widget=forms.Select(choices=usernames))
 
     def clean(self):
         cleaned_data = super(AddUserSettingForm, self).clean()
         print("received form for user name {}".format(
-              cleaned_data['user_name']))
+              cleaned_data['username']))
         return cleaned_data
