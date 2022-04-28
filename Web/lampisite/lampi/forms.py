@@ -31,6 +31,19 @@ class AddLampiForm(forms.Form):
             cleaned_data['device'] = devices[0]
         return cleaned_data
 
+class AddUserForm(forms.Form):
+    user_name = forms.CharField(label="User Name")
+    def clean(self):
+        cleaned_data = super(AddUserForm, self).clean()
+        print("received form with user name {}".format(
+              cleaned_data['user_name']))
+        existing_users = LampiPref.objects.order_by('user_name').distinct()
+        if cleaned_data['user_name'] in existing_users:
+            self.add_eror('user_name', ValidationError("User already exists", code='invalid'))
+        else:
+            # Face stuff
+        return cleaned_data
+
 class AddUserSettingForm(forms.Form):
 
     def __init__(self, device_id, user, *args, **kwargs):

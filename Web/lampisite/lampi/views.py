@@ -23,6 +23,8 @@ class UsersIndexView(LoginRequiredMixin, generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super(UsersIndexView, self).get_context_data(**kwargs)
+        devices = Lampi.objects.filter(user=self.request.user)     
+        context['can_add_user'] = devices is not None
         context['MIXPANEL_TOKEN'] = settings.MIXPANEL_TOKEN
         return context
 
@@ -121,9 +123,9 @@ class UpdateSettingsView(LoginRequiredMixin, generic.FormView):
         context['device'] = get_object_or_404(
             Lampi, pk=self.request.GET['device_id'], user=self.request.user)
         print(context['device_id'])
-        context['h'] = self.request.GET['h']
-        context['s'] = self.request.GET['s']
-        context['b'] = self.request.GET['b']
+        context['h'] = int(self.request.GET['h'])/100
+        context['s'] = int(self.request.GET['s'])/100
+        context['b'] = int(self.request.GET['b'])/100
         context['MIXPANEL_TOKEN'] = settings.MIXPANEL_TOKEN
         return context
 
@@ -133,5 +135,10 @@ class UpdateSettingsView(LoginRequiredMixin, generic.FormView):
         lampis = Lampi.objects.filter(user=self.request.user)
         user = LampiPref.objects.get(device_id=context['device_id'], user_name=user_name)
         print(user)
+        if user is not None:
+            new_state = {'color': {'h': context['h'], 's':context['s']},
+            'brightness': context['b']}
+            user.settings = str(new_state)
+            user.save()
         self.success_url = "device/" + context['device_id']
         return super(UpdateSettingsView, self).form_valid(form)

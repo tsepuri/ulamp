@@ -109,6 +109,14 @@ function LampiPage($){
           obj.client.send(message);
         },
 
+        saveSettingsUrl : function() {
+          let h = obj.lampState.color.h * 100;
+          let s = obj.lampState.color.s * 100;
+          let b = obj.lampState.brightness * 100;
+          let new_path = '/lampi/settings?device_id=' + deviceId + '&h=' + h + '&s=' + s + '&b=' + b;
+          $( "#settings-href" ).attr( "href", new_path);
+        },
+
         updateUI : function() {
           if(obj.isManipulatingSlider) {
             return;
@@ -117,6 +125,7 @@ function LampiPage($){
           setSliderValues(obj.lampState.color.h,
             obj.lampState.color.s,
             obj.lampState.brightness);
+          obj.saveSettingsUrl();
           obj.updatePowerButton();
           obj.updateUIColors();
         },
@@ -174,6 +183,7 @@ function LampiPage($){
             obj.connect();
 
             $( "#power" ).click(obj.onPowerToggle);
+            obj.saveSettingsUrl();
             $( ".slider" ).on( "change input", obj.onSliderInput);
             $( ".slider" ).on( "mousedown touchstart", function() {
                 obj.isManipulatingSlider = true; });

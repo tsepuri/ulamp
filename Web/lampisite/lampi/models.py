@@ -66,8 +66,13 @@ class Lampi(models.Model):
 class LampiPref(models.Model):
     device_id = models.ForeignKey(Lampi, db_index=True, on_delete=models.CASCADE)
     user_name = models.CharField(max_length=50)
-    settings = models.CharField(max_length=50, default="{'color': {'h': 1, 's':1}, 'brightness': 1}")
+    settings = models.CharField(max_length=100, default="{'color': {'h': 1, 's':1}, 'brightness': 1}")
     # pics??
     # user detail?
     def __str__(self):
         return f"{self.device_id}, {self.user_name}: {self.settings}"
+    
+    def add_user(self, name, device_id):
+        self.user_name = name
+        self.device_id = device_id
+        self.save()
