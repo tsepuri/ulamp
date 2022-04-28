@@ -5,6 +5,7 @@ from .models import Lampi, LampiPref
 from django.conf import settings
 from lampi.forms import AddLampiForm, AddUserSettingForm, AddUserForm
 from mixpanel import Mixpanel
+import json
 
 class IndexView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'index.html'
@@ -137,9 +138,9 @@ class UpdateSettingsView(LoginRequiredMixin, generic.FormView):
         user = LampiPref.objects.get(device_id=context['device_id'], username=username)
         print(user)
         if user is not None:
-            new_state = {'color': {'h': context['h'], 's':context['s']},
-            'brightness': context['b']}
-            user.settings = str(new_state)
+            new_state = {"color": {"h": context['h'], "s":context['s']},
+            "brightness": context['b']}
+            user.settings = json.dumps(new_state)
             user.save()
         self.success_url = "device/" + context['device_id']
         return super(UpdateSettingsView, self).form_valid(form)

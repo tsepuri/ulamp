@@ -110,9 +110,9 @@ function LampiPage($){
         },
 
         saveSettingsUrl : function() {
-          let h = obj.lampState.color.h * 100;
-          let s = obj.lampState.color.s * 100;
-          let b = obj.lampState.brightness * 100;
+          let h = parseInt(obj.lampState.color.h * 100);
+          let s = parseInt(obj.lampState.color.s * 100);
+          let b = parseInt(obj.lampState.brightness * 100);
           let new_path = '/lampi/settings?device_id=' + deviceId + '&h=' + h + '&s=' + s + '&b=' + b;
           $( "#settings-href" ).attr( "href", new_path);
         },

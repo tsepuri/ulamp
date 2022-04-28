@@ -1,4 +1,4 @@
-
+import traceback
 import platform
 from math import fabs
 import json
@@ -13,7 +13,8 @@ from lampi.models import *
 MQTT_BROKER_PORT = 50001
 MQTT_CLIENT_ID = "user_persets"
 
-FACE_DETECTED_RE_PATTERN = r'devices\/(?P<device_id>[0-9a-f]*)\/user\/detected'
+FACE_DETECTED_RE_PATTERN = r'devices\/(?P<device_id>[0-9a-z]*)\/user\/detected'
+TOPIC_SET_LAMP_CONFIG = "lamp/set_config"
 TOPIC_USER_DETECTED = "user/detected"
 
 class Command(BaseCommand):
@@ -42,11 +43,13 @@ class Command(BaseCommand):
 
     def receive_new_lamp_state(self, client, userdata, message):
         # message payload has to treated as type "bytes" in Python 3
-        if message.payload == b'1':
+        if message.payload != None:
             # broker connected
             print("Topic {}".format(message.topic))    
             results = re.search(FACE_DETECTED_RE_PATTERN, message.topic.lower())
+            print("Parced topic {}".format(results))    
             camera_id = results.group('device_id')
+            print("Camera id {}".format(camera_id))
             try:
                 camera = Camera.objects.get(device_id=camera_id)
                 print("Found {}".format(camera))
@@ -56,21 +59,23 @@ class Command(BaseCommand):
                 for lampi in lampis:
                     new_person = json.loads(message.payload.decode('utf-8'))
                     print(new_person)
+                    print(f"Device id: {lampi.device_id}")
                     preference = LampiPref.objects.get(device_id=lampi.device_id, username=new_person['name'])
                     new_state = {'color': {'h': 1, 's':1},
                         'brightness': 1,
                         'on': self.lamp_is_on,
                         'client': 'ec2'}
                     if preference != None:
+                        print(f"Preferences: {preference.settings}")
                         settings = json.loads(preference.settings)
                         settings['on'] = True
                         settings['client'] = 'ec2'
                         new_state = settings
 
-                    self._update_ui(new_state, lampi.device_id)
+                    self._update_ui(new_state=new_state, device_id=lampi.device_id)
             
-            except Lampi.DoesNotExist:
-                print("Did not find camera")
+            except Exception:
+                print(traceback.format_exc())
 
     def _update_ui(self, new_state, device_id):
         if self._updated and new_state['client'] == MQTT_CLIENT_ID:
@@ -85,7 +90,7 @@ class Command(BaseCommand):
                 self.brightness = new_state['brightness']
             if 'on' in new_state:
                 self.lamp_is_on = new_state['on']
-            self._update_leds()
+            self._update_leds(device_id)
         finally:
             self._updatingUI = False
 

@@ -113,7 +113,7 @@ class Camera(models.Model):
 class LampiPref(models.Model):
     device_id = models.ForeignKey(Lampi, db_index=True, on_delete=models.CASCADE)
     username = models.CharField(max_length=100, db_column='user_name')
-    settings = models.CharField(max_length=100, default="{'color': {'h': 1, 's':1}, 'brightness': 1}")
+    settings = models.CharField(max_length=100, default='{"color": {"h": 1, "s":1}, "brightness": 1}')
     # pics??
     # user detail?
     def __str__(self):
