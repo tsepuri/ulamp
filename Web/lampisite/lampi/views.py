@@ -97,14 +97,25 @@ class AddUserView(LoginRequiredMixin, generic.FormView):
     def form_valid(self, form):
         username = form.cleaned_data['username']
         print(username)
-        device.associate_and_publish_associated_msg(self.request.user)
+        
+        # Finding Associated Lampis
+        lampis = Lampi.objects.filter(user=self.request.user)
+        for lampi in lampis:
+            print(f"Device id: {lampi.device_id}")
+            try:
+                preference = LampiPref.objects.get(device_id=lampi, username=username)
+            except LampiPref.DoesNotExist:
+                preference = None
 
-        mp = Mixpanel(settings.MIXPANEL_TOKEN)
-        mp.track(device.user.username, "LAMPI Activation",
-                 {'event_type': 'activations', 'interface': 'web',
-                  'device_id': device.device_id})
+            if preference == None:
+                preference = LampiPref.objects.create(device_id=lampi, username=username)
 
-        return super(AddLampiView, self).form_valid(form)
+        return super(AddUserView, self).form_valid(form)
+
+def upload_photos(request):
+    print(request)
+    photos = request.POST.get('photos', None)
+    print(photos)
 
 class UpdateSettingsView(LoginRequiredMixin, generic.FormView):
     template_name = 'lampi/updateSettings.html'

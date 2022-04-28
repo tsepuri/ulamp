@@ -60,7 +60,10 @@ class Command(BaseCommand):
                     new_person = json.loads(message.payload.decode('utf-8'))
                     print(new_person)
                     print(f"Device id: {lampi.device_id}")
-                    preference = LampiPref.objects.get(device_id=lampi.device_id, username=new_person['name'])
+                    try:
+                        preference = LampiPref.objects.get(device_id=lampi.device_id, username=new_person['name'])
+                    except SomeModel.DoesNotExist:
+                        preference = None
                     new_state = {'color': {'h': 1, 's':1},
                         'brightness': 1,
                         'on': self.lamp_is_on,

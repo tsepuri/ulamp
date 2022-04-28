@@ -8,9 +8,9 @@
 
   // |streaming| indicates whether or not we're currently streaming
   // video from the camera. Obviously, we start at false.
-
+  var photos = []
   var streaming = false;
-
+  MAX_PHOTOS = 10
   // The various HTML elements we need to configure or control. These
   // will be set by the startup() function.
 
@@ -72,6 +72,31 @@
     var data = canvas.toDataURL('image/png');
     photo.setAttribute('src', data);
   }
+
+  document.querySelector("#submits").addEventListener('click', (e) => {
+    uploadPhotos()
+  })
+  document.querySelector("#max-photos").innerHTML = MAX_PHOTOS
+   document.querySelector("#submit").style.display = 'none'
+  function uploadPhotos() {
+    $.ajax({
+        type: "POST",
+        url: '/users/upload_photos',
+        data: {
+            csrfmiddlewaretoken: window.CSRF_TOKEN,
+            photos: JSON.stringify({
+              photos}),
+        },
+        dataType: "json",
+        success: function (data) {
+            // any process in data
+            console.log("success")
+        },
+        failure: function () {
+            console.log("failure");
+        }
+    });
+  }
   
   // Capture a photo by fetching the current contents of the video
   // and drawing it into a canvas, then converting that to a PNG
@@ -86,10 +111,19 @@
       canvas.width = width;
       canvas.height = height;
       context.drawImage(video, 0, 0, width, height);
-      console.log("hu")
       var data = canvas.toDataURL('image/png');
       photo.setAttribute('src', data);
-      console.log(data)
+      photos.push(data)
+      let currentPhotos = +document.querySelector("#num-photos").innerHTML
+      if (currentPhotos == MAX_PHOTOS) {
+        document.querySelector("#startbutton").style.display = 'none'
+        document.querySelector("#submit").style.display = 'block'
+        console.log("what now")
+        console.log(photos)
+      }
+      else {
+         document.querySelector("#num-photos").innerHTML = currentPhotos + 1
+      }
     } else {
       clearphoto();
     }

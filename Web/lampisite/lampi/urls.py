@@ -17,6 +17,7 @@ urlpatterns = [
     path('users/', include([
     path('', views.UsersIndexView.as_view(), name='usersindex'),
     path('add/', views.AddUserView.as_view(), name='adduser'),
+    re_path(r'^upload_photos$', views.upload_photos, name='uploadphotos'),
     re_path(r'^user/(?P<username>[0-9a-fA-F]+)$',
             views.UserDetailView.as_view(), name='userdetail'),
     ]))
