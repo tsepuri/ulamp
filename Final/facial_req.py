@@ -68,6 +68,10 @@ class FacialRecognition:
             # grab the frame from the threaded video stream and resize it
             # to 500px (to speedup processing)
             # frame = vs.read()
+            if img_counter % 150 == 0:
+                encodingsP = "encodings.pickle"
+                self.data = pickle.loads(open(encodingsP, "rb").read())
+                print("Read pickle")
             ret, frame = cap.read()
             print(ret)
             print("Read Image")

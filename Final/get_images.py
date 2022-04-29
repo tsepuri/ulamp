@@ -29,7 +29,7 @@ class GetImages:
     def receive_new_user(self, client, userdata, message):
         if message.topic == 'user/added' and message.payload != 0:
             new_user_added = json.loads(message.payload.decode('utf-8'))
-            username = new_user_added['name']
+            username = new_user_added['username']
             directory = os.path.join(os.getcwd(), 'dataset', username)
             os.makedirs(directory)
             image_url_base = "http://ec2-3-90-19-244.compute-1.amazonaws.com/static/users/"
