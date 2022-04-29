@@ -18,9 +18,10 @@
   
   .camera {
     width: 340px;
+    height: 600px;
     display:inline-block;
   }
-  
+
   .output {
     width: 340px;
     display:inline-block;
@@ -30,7 +31,7 @@
   position:relative;
   margin-left:auto;
   margin-right:auto;
-  bottom:32px;
+  bottom:40px;
   cursor: pointer;
   background-color: rgba(0, 150, 0, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.7);

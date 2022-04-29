@@ -87,6 +87,7 @@ function LampiPage($){
 
           obj.scheduleConfigChange();
           obj.updateUIColors();
+          obj.saveSettingsUrl();
         },
 
         scheduleConfigChange : function() {

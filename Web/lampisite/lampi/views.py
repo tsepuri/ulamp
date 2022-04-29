@@ -6,6 +6,12 @@ from django.conf import settings
 from lampi.forms import AddLampiForm, AddUserSettingForm, AddUserForm
 from mixpanel import Mixpanel
 import json
+import base64
+from PIL import Image
+import re
+import io
+import os
+import paho.mqtt.publish
 
 class IndexView(LoginRequiredMixin, generic.TemplateView):
     template_name = 'index.html'
@@ -115,7 +121,30 @@ class AddUserView(LoginRequiredMixin, generic.FormView):
 def upload_photos(request):
     print(request)
     photos = request.POST.get('photos', None)
-    print(photos)
+    username = request.POST.get('username', None)
+    print(username)
+    ROOT = f'{settings.STATIC_ROOT}/users/{username}'
+    os.makedirs(ROOT)
+    parsed_photos = json.loads(photos)["photos"]
+    for index, photo in enumerate(parsed_photos):
+        image_data = base64.urlsafe_b64decode(re.sub('^data:image/.+;base64,', '', parsed_photos[0]))
+        image = Image.open(io.BytesIO(image_data))
+        image.save(f'{ROOT}/{index+1}.png', 'png')
+        #user/added
+        #user_msg['username'] = username
+    # camera = Camera.objects.get(user=self.request.user)
+    user_msg = {}
+    user_msg['username'] = username
+    user_msg['client'] = 'ec2'
+    paho.mqtt.publish.single(
+            f'devices/cameraid/user/added',
+            json.dumps(user_msg),
+            qos=2,
+            retain=False,
+            hostname="localhost",
+            port=50001,
+            )
+    # send message
 
 class UpdateSettingsView(LoginRequiredMixin, generic.FormView):
     template_name = 'lampi/updateSettings.html'

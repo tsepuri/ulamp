@@ -9,11 +9,11 @@
   // |streaming| indicates whether or not we're currently streaming
   // video from the camera. Obviously, we start at false.
   var photos = []
+  var username = ""
   var streaming = false;
   MAX_PHOTOS = 10
   // The various HTML elements we need to configure or control. These
   // will be set by the startup() function.
-
   var video = null;
   var canvas = null;
   var photo = null;
@@ -73,11 +73,21 @@
     photo.setAttribute('src', data);
   }
 
-  document.querySelector("#submits").addEventListener('click', (e) => {
-    uploadPhotos()
+  document.querySelector("#submit").addEventListener('click', (e) => {
+    username = document.querySelector("#id_username").value
+    if (username) {
+      try {
+        uploadPhotos()
+      }
+      catch (err) {
+        console.log(err)
+        document.querySelector(".warning").style.display = 'block'
+      }
+    }
   })
   document.querySelector("#max-photos").innerHTML = MAX_PHOTOS
    document.querySelector("#submit").style.display = 'none'
+  document.querySelector(".warning").style.display = 'none'
   function uploadPhotos() {
     $.ajax({
         type: "POST",
@@ -86,6 +96,7 @@
             csrfmiddlewaretoken: window.CSRF_TOKEN,
             photos: JSON.stringify({
               photos}),
+            username: document.querySelector("#id_username").value
         },
         dataType: "json",
         success: function (data) {
