@@ -121,4 +121,3 @@ class Train:
         f.write(pickle.dumps(data))
         f.close()
 '''
-train()
