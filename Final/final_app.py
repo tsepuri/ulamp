@@ -7,7 +7,8 @@ from paho.mqtt.client import Client
 from lamp_common import *
 
 MQTT_BROKER_PORT = 50001
-MQTT_CLIENT_ID = "user_persets"
+MQTT_CLIENT_ID = "camera"
+
 
 class UserPresets:
     def __init__(self):
@@ -20,12 +21,12 @@ class UserPresets:
         self.mqtt = Client(client_id=MQTT_CLIENT_ID)
         self.mqtt.enable_logger()
         self.mqtt.on_connect = self.on_connect
-        
 
     def on_connect(self, client, userdata, flags, rc):
         self.mqtt.message_callback_add("devices/b827eba09ec0/" + TOPIC_USER_DETECTED,
                                        self.receive_new_lamp_state)
-        self.mqtt.subscribe("devices/b827eba09ec0/" + TOPIC_USER_DETECTED, qos=1)
+        self.mqtt.subscribe("devices/b827eba09ec0/" +
+                            TOPIC_USER_DETECTED, qos=1)
 
     def serve(self):
         self.mqtt.connect('localhost', port=50001)
@@ -34,20 +35,20 @@ class UserPresets:
     def receive_new_lamp_state(self, client, userdata, message):
         new_person = json.loads(message.payload.decode('utf-8'))
         print(new_person)
-        new_state = {'color': {'h': 1, 's':1},
-            'brightness': 1,
-            'on': self.lamp_is_on,
-            'client': 'ec2'}
+        new_state = {'color': {'h': 1, 's': 1},
+                     'brightness': 1,
+                     'on': self.lamp_is_on,
+                     'client': 'ec2'}
         if new_person['name'] == 'Oleksii':
-            new_state = {'color': {'h': 0.5, 's':1},
-               'brightness': 1,
-               'on': self.lamp_is_on,
-               'client': 'ec2'}
+            new_state = {'color': {'h': 0.5, 's': 1},
+                         'brightness': 1,
+                         'on': self.lamp_is_on,
+                         'client': 'ec2'}
         if new_person['name'] == 'Tarun':
             new_state = {'color': {'h': 0.2, 's': 1},
-               'brightness': 1,
-               'on': self.lamp_is_on,
-               'client': 'ec2'}
+                         'brightness': 1,
+                         'on': self.lamp_is_on,
+                         'client': 'ec2'}
 
         self._update_ui(new_state)
 
@@ -78,6 +79,7 @@ class UserPresets:
         self.mqtt.publish("devices/b827eba09ec0/" + TOPIC_SET_LAMP_CONFIG,
                           json.dumps(msg).encode('utf-8'),
                           qos=1)
+
 
 user_presets = UserPresets()
 user_presets.serve()

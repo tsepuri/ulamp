@@ -129,6 +129,14 @@ class FacialRecognition:
 
                 # update the list of names
                 names.append(name)
+                if currentname != name and name == "Unknown":
+                    currentname = "Unknown"
+                    msg = {"name":name, "client":MQTT_CLIENT_ID}
+                    self.mqtt.publish(TOPIC_USER_DETECTED,
+                            json.dumps(msg).encode('utf-8'),
+                            qos=1)
+                print(name)
+                
 
             # loop over the recognized faces
             # for ((top, right, bottom, left), name) in zip(boxes, names):
